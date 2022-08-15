@@ -12,7 +12,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(Main.class.getResource("MainView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/crudjdbcjavafx/MainView.fxml"));
             ScrollPane scrollPane = loader.load();
 
             scrollPane.setFitToWidth(true);
