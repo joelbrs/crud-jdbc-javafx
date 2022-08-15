@@ -12,11 +12,16 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.net.URL;
 import java.util.Date;
 import java.util.List;
@@ -62,7 +67,7 @@ public class SellerListController implements Initializable, DataChangeListener {
         Stage parentStage = Utils.currentStage(event);
         Seller obj = new Seller();
 
-        createDialogForm(obj, "/com/project_classes/FormDepartamentos.fxml", parentStage);
+        createDialogForm(obj, "/com/project_classes/FormVendedores.fxml", parentStage);
     }
 
     @Override
@@ -102,29 +107,29 @@ public class SellerListController implements Initializable, DataChangeListener {
     }
 
     private void createDialogForm(Seller obj, String absoluteName, Stage parentStage) {
-//        try {
-//            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
-//            Pane pane = loader.load();
-//
-//            FormDepartamentosController controller = loader.getController();
-//            controller.setSeller(obj);
-//            controller.setServiceDepartamento(new ServicesDepartamento());
-//            controller.subscribeDataChangeListener(this);
-//
-//            controller.updateFormData();
-//
-//            Stage dialogStage = new Stage();
-//
-//            dialogStage.setTitle("Coloque os dados do Departamento");
-//            dialogStage.setScene(new Scene(pane));
-//            dialogStage.setResizable(false);
-//            dialogStage.initOwner(parentStage);
-//            dialogStage.initModality(Modality.WINDOW_MODAL);
-//            dialogStage.showAndWait();
-//
-//        } catch (IOException e) {
-//            Alerts.showAlert("IOException", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
-//        }
+        try {
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(absoluteName));
+            Pane pane = loader.load();
+
+            FormVendedoresController controller = loader.getController();
+            controller.setSeller(obj);
+            controller.setServiceVendedores(new ServicesVendedores());
+            controller.subscribeDataChangeListener(this);
+
+            controller.updateFormData();
+
+            Stage dialogStage = new Stage();
+
+            dialogStage.setTitle("Coloque os dados do Vendedor");
+            dialogStage.setScene(new Scene(pane));
+            dialogStage.setResizable(false);
+            dialogStage.initOwner(parentStage);
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.showAndWait();
+
+        } catch (IOException e) {
+            Alerts.showAlert("IOException", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
+        }
     }
 
     @Override
@@ -146,7 +151,7 @@ public class SellerListController implements Initializable, DataChangeListener {
                 setGraphic(button);
                 button.setOnAction(
                         event -> createDialogForm(
-                                obj, "/com/project_classes/FormDepartamentos.fxml",Utils.currentStage(event)));
+                                obj, "/com/project_classes/FormVendedores.fxml",Utils.currentStage(event)));
             }
         });
     }
@@ -184,6 +189,4 @@ public class SellerListController implements Initializable, DataChangeListener {
             }
         }
     }
-
-
 }
