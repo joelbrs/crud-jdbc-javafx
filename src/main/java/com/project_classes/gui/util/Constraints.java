@@ -1,4 +1,4 @@
-package com.example.crudjdbcjavafx.gui.util;
+package com.project_classes.gui.util;
 
 import javafx.scene.control.TextField;
 

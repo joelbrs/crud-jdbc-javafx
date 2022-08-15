@@ -1,7 +1,7 @@
-package com.example.crudjdbcjavafx.gui;
+package com.project_classes.gui;
 
-import com.example.crudjdbcjavafx.application.Main;
-import com.example.crudjdbcjavafx.gui.util.Alerts;
+import com.project_classes.application.Main;
+import com.project_classes.gui.util.Alerts;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -35,12 +35,12 @@ public class ViewController implements Initializable {
 
     @FXML
     public void onMenuItemDepartamentoAction() {
-        System.out.println("onMenuItemDepartamentoAction");
+        loadView("/com/project_classes/ListaDepartamentos.fxml");
     }
 
     @FXML
     public void onMenuItemSobreAction() {
-        loadView("/com/example/crudjdbcjavafx/Sobre.fxml");
+        loadView("/com/project_classes/Sobre.fxml");
     }
 
     @Override

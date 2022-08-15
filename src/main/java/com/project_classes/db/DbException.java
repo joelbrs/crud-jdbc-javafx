@@ -1,0 +1,8 @@
+package com.project_classes.db;
+
+public class DbException extends RuntimeException {
+    
+    public DbException(String msg) {
+        super(msg);
+    }
+}

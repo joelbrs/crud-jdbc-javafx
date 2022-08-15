@@ -1,4 +1,4 @@
-package com.example.crudjdbcjavafx.application;
+package com.project_classes.application;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
@@ -15,7 +15,7 @@ public class Main extends Application {
     @Override
     public void start(Stage primaryStage) {
         try {
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/example/crudjdbcjavafx/MainView.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("/com/project_classes/MainView.fxml"));
             ScrollPane scrollPane = loader.load();
 
             scrollPane.setFitToWidth(true);
