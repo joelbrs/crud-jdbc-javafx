@@ -3,6 +3,7 @@ package com.project_classes.gui;
 import com.project_classes.application.Main;
 import com.project_classes.gui.util.Alerts;
 import com.project_classes.model.services.ServicesDepartamento;
+import com.project_classes.model.services.ServicesVendedores;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
@@ -32,7 +33,10 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemVendedorAction() {
-        System.out.println("onMenuItemVendedorAction");
+        loadView("/com/project_classes/ListaVendedores.fxml", (SellerListController controller) -> {
+            controller.setServiceVendedores(new ServicesVendedores());
+            controller.updateTableView();
+        });
     }
 
     @FXML
@@ -45,7 +49,8 @@ public class MainViewController implements Initializable {
 
     @FXML
     public void onMenuItemSobreAction() {
-        loadView("/com/project_classes/Sobre.fxml", x -> {});
+        loadView("/com/project_classes/Sobre.fxml", x -> {
+        });
     }
 
     @Override
