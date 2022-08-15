@@ -6,6 +6,7 @@ import com.project_classes.gui.listeners.DataChangeListener;
 import com.project_classes.gui.util.Alerts;
 import com.project_classes.gui.util.Utils;
 import com.project_classes.model.entities.Seller;
+import com.project_classes.model.services.ServicesDepartamento;
 import com.project_classes.model.services.ServicesVendedores;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -112,8 +113,9 @@ public class SellerListController implements Initializable, DataChangeListener {
             Pane pane = loader.load();
 
             FormVendedoresController controller = loader.getController();
-            controller.setSeller(obj);
-            controller.setServiceVendedores(new ServicesVendedores());
+            controller.setServices(obj);
+            controller.setServiceVendedores(new ServicesVendedores(), new ServicesDepartamento());
+            controller.loadAssociatedObjects();
             controller.subscribeDataChangeListener(this);
 
             controller.updateFormData();
