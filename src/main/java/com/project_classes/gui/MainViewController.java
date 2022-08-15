@@ -2,7 +2,6 @@ package com.project_classes.gui;
 
 import com.project_classes.application.Main;
 import com.project_classes.gui.util.Alerts;
-import com.project_classes.model.entities.Department;
 import com.project_classes.model.services.ServicesDepartamento;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
