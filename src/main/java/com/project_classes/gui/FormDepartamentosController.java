@@ -1,10 +1,12 @@
 package com.project_classes.gui;
 
 import com.project_classes.db.DbException;
+import com.project_classes.gui.listeners.DataChangeListener;
 import com.project_classes.gui.util.Alerts;
 import com.project_classes.gui.util.Constraints;
 import com.project_classes.gui.util.Utils;
 import com.project_classes.model.entities.Department;
+import com.project_classes.model.exceptions.ValidationException;
 import com.project_classes.model.services.ServicesDepartamento;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -15,13 +17,15 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 
 import java.net.URL;
-import java.util.ResourceBundle;
+import java.util.*;
 
 public class FormDepartamentosController implements Initializable {
 
     private Department entity;
 
     private ServicesDepartamento service;
+
+    private List<DataChangeListener> dataChangeListeners = new ArrayList<>();
 
     @FXML
     private TextField txtId;
@@ -46,6 +50,18 @@ public class FormDepartamentosController implements Initializable {
         this.service = service;
     }
 
+    public void subscribeDataChangeListener(DataChangeListener listener) {
+        dataChangeListeners.add(listener);
+    }
+
+    private void notifyDataChangeListeners() {
+
+        for (DataChangeListener listener : dataChangeListeners) {
+            listener.onDataChanged();
+        }
+
+    }
+
     @FXML
     public void onBtSaveAction(ActionEvent event) {
 
@@ -61,8 +77,13 @@ public class FormDepartamentosController implements Initializable {
             entity = getFormData();
             service.saveOrUpdate(entity);
 
+            notifyDataChangeListeners();
+
             Utils.currentStage(event).close();
-        } catch (DbException e) {
+        } catch (ValidationException e) {
+            setErrorMesssages(e.getErrors());
+        }
+        catch (DbException e) {
             Alerts.showAlert("Erro ao salvar objeto", null, e.getMessage(), Alert.AlertType.ERROR);
         }
 
@@ -98,9 +119,27 @@ public class FormDepartamentosController implements Initializable {
     private Department getFormData() {
         Department obj = new Department();
 
+        ValidationException exception = new ValidationException("Erro de validação");
+
         obj.setId(Utils.tryParseToInt(txtId.getText()));
+
+        if (txtName.getText() == null || txtName.getText().trim().equals("")) {
+            exception.addErrors("name", "O campo não pode estar vazio!");
+        }
         obj.setName(txtName.getText());
 
+        if (exception.getErrors().size() > 0) {
+            throw exception;
+        }
         return obj;
     }
+
+    private void setErrorMesssages(Map<String, String> errors) {
+        Set<String> fields = errors.keySet();
+
+        if (fields.contains("name")) {
+            labelErrorName.setText(errors.get("name"));
+        }
+    }
+
 }

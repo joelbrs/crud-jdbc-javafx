@@ -1,6 +1,7 @@
 package com.project_classes.gui;
 
 import com.project_classes.application.Main;
+import com.project_classes.gui.listeners.DataChangeListener;
 import com.project_classes.gui.util.Alerts;
 import com.project_classes.gui.util.Utils;
 import com.project_classes.model.entities.Department;
@@ -26,7 +27,7 @@ import java.net.URL;
 import java.util.List;
 import java.util.ResourceBundle;
 
-public class ListaDepertamentosController implements Initializable {
+public class ListaDepertamentosController implements Initializable, DataChangeListener {
 
     private ServicesDepartamento service;
     private ObservableList<Department> obsList;
@@ -88,6 +89,8 @@ public class ListaDepertamentosController implements Initializable {
             FormDepartamentosController controller = loader.getController();
             controller.setDepartment(obj);
             controller.setServiceDepartamento(new ServicesDepartamento());
+            controller.subscribeDataChangeListener(this);
+
             controller.updateFormData();
 
             Stage dialogStage = new Stage();
@@ -102,5 +105,10 @@ public class ListaDepertamentosController implements Initializable {
         } catch (IOException e) {
             Alerts.showAlert("IOException", "Error loading view", e.getMessage(), Alert.AlertType.ERROR);
         }
+    }
+
+    @Override
+    public void onDataChanged() {
+        updateTableView();
     }
 }
