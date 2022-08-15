@@ -1,6 +1,7 @@
 package com.project_classes.gui;
 
 import com.project_classes.gui.util.Constraints;
+import com.project_classes.model.entities.Department;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Button;
@@ -11,6 +12,8 @@ import java.net.URL;
 import java.util.ResourceBundle;
 
 public class FormDepartamentosController implements Initializable {
+
+    private Department entity;
 
     @FXML
     private TextField txtId;
@@ -26,6 +29,10 @@ public class FormDepartamentosController implements Initializable {
 
     @FXML
     private Button btCancel;
+
+    public void setDepartment(Department entity) {
+        this.entity = entity;
+    }
 
     @FXML
     public void onBtSaveAction() {
@@ -47,5 +54,15 @@ public class FormDepartamentosController implements Initializable {
         Constraints.setTextFieldInteger(txtId);
         Constraints.setTextFieldMaxLength(txtName, 30);
 
+    }
+
+    public void updateFormData() {
+
+        if (entity == null) {
+            throw  new IllegalStateException("Entity é null");
+        }
+
+        txtId.setText(String.valueOf(entity.getId()));
+        txtName.setText(entity.getName());
     }
 }
